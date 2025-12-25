@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>My Courses | CCE Mahson</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="student.css">
+</head>
+
+<body>
+
+    <!-- ===== TOP BAR ===== -->
+    <header class="topbar">
+        <span class="hamburger" onclick="toggleMenu()">☰</span>
+        <span class="title">Student Panel</span>
+    </header>
+
+    <div class="layout">
+
+        <!-- ===== SIDEBAR ===== -->
+        <aside class="sidebar" id="sidebar">
+            <h2>Student</h2>
+            <a href="student-dashboard.html">Dashboard</a>
+            <a href="student-courses.html" class="active">My Courses</a>
+            <a href="student-certificates.html">Certificates</a>
+            <a href="student-profile.html">Profile</a>
+            <a href="#" onclick="logout()">Logout</a>
+        </aside>
+
+        <!-- ===== MAIN ===== -->
+        <main class="main">
+            <h1>My Courses</h1>
+            <p class="muted">Only courses you have purchased appear here</p>
+
+            <div id="courseList" class="course-grid">
+                <!-- courses load here -->
+            </div>
+        </main>
+
+    </div>
+
+    <script>
+        const API = "http://localhost:5000/api";
+        const studentId = localStorage.getItem("studentId");
+
+        if (!studentId) {
+            window.location.href = "student-login.html";
+        }
+
+        /* ===== UI ===== */
+        function toggleMenu() {
+            document.getElementById("sidebar").classList.toggle("open");
+        }
+        function logout() {
+            localStorage.clear();
+            window.location.href = "student-login.html";
+        }
+
+        /* ===== LOAD BOUGHT COURSES ===== */
+        async function loadMyCourses() {
+            const res = await fetch(`${API}/admissions/student/${studentId}`);
+            const admissions = await res.json();
+
+            const box = document.getElementById("courseList");
+            box.innerHTML = "";
+
+            if (admissions.length === 0) {
+                box.innerHTML =
+                    `<p class="muted">You have not purchased any course yet.</p>`;
+                return;
+            }
+
+            admissions.forEach(a => {
+                const start = new Date(a.createdAt);
+                const now = new Date();
+
+                // "6 Months" -> 6
+                const months = parseInt(a.course.duration);
+                const totalMs = months * 30 * 24 * 60 * 60 * 1000;
+                const progress = Math.min(
+                    Math.round(((now - start) / totalMs) * 100),
+                    100
+                );
+
+                box.innerHTML += `
+      <div class="course-card">
+        <h3>${a.course.title}</h3>
+
+        <p><b>Duration:</b> ${a.course.duration}</p>
+
+        <p class="status">
+          Status:
+          <span class="${progress >= 100 ? 'green' : 'orange'}">
+            ${progress >= 100 ? 'COMPLETED' : 'ONGOING'}
+          </span>
+        </p>
+
+        <div class="progress-bar">
+          <div class="progress-fill"
+               style="width:${progress}%"></div>
+        </div>
+
+        <p class="progress-text">${progress}% completed</p>
+
+        ${progress >= 100
+                        ? `<button class="btn outline"
+                onclick="viewCertificate('${a._id}')">
+                View Certificate
+             </button>`
+                        : `<button class="btn outline disabled">
+                Certificate Locked
+             </button>`
+                    }
+      </div>
+    `;
+            });
+        }
+
+        function viewCertificate(admissionId) {
+            window.location.href =
+                `student-certificates.html?admission=${admissionId}`;
+        }
+
+        loadMyCourses();
+    </script>
+
+</body>
+
+</html>

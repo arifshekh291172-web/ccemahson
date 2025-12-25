@@ -1,0 +1,5 @@
+@media(max-width:768px){
+.nav { display:none; }
+.nav.open { display:flex; flex-direction:column; }
+.hamburger { display:block; cursor:pointer; }
+}

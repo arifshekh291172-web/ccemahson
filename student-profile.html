@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Profile | CCE Mahson</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="student.css">
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="topbar">
+  <span class="hamburger" onclick="toggleMenu()">☰</span>
+  <span class="title">Student Panel</span>
+</header>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <h2>Student</h2>
+    <a href="student-dashboard.html">Dashboard</a>
+    <a href="student-courses.html">My Courses</a>
+    <a href="student-certificates.html">Certificates</a>
+    <a href="student-profile.html" class="active">Profile</a>
+    <a href="#" onclick="logout()">Logout</a>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <h1>My Profile</h1>
+
+    <div class="box" style="max-width:520px">
+      <p style="color:#64748b;margin-bottom:14px">
+        Update your profile details
+      </p>
+
+      <input id="name" placeholder="Full Name">
+      <input id="username" placeholder="Username" disabled>
+
+      <input id="email" placeholder="Email Address">
+      <button class="btn outline" onclick="sendOtp()">
+        Verify New Email
+      </button>
+
+      <div id="otpBox" style="display:none">
+        <input id="otp" placeholder="Enter OTP">
+        <button class="btn" onclick="verifyOtp()">Verify Email</button>
+      </div>
+
+      <div class="loader" id="loader">Processing...</div>
+
+      <button class="btn" style="margin-top:14px"
+        onclick="saveProfile()">
+        Save Changes
+      </button>
+    </div>
+  </main>
+</div>
+
+<script src="student-profile.js"></script>
+</body>
+</html>

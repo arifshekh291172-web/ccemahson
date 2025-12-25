@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Add Course</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+
+  <div class="dashboard">
+
+    <aside class="sidebar">
+      <h2>Admin Panel</h2>
+      <a href="admin-dashboard.html">Dashboard</a>
+      <a href="admin-courses.html" class="active">Courses</a>
+    </aside>
+
+    <main class="main">
+      <h1>Add New Course</h1>
+
+      <input id="cname" placeholder="Course Name">
+      <input id="cduration" placeholder="Duration (6 Months)">
+      <input id="cfees" placeholder="Fees">
+      <textarea id="cdesc" placeholder="Course Description"></textarea>
+
+      <button class="btn add" onclick="addCourse()">Save Course</button>
+    </main>
+
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+
+</html>

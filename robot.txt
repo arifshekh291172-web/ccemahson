@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+# Block private areas
+Disallow: /student-
+Disallow: /admin-
+Disallow: /payment
+Disallow: /dashboard
+
+# Sitemap location
+Sitemap: https://www.ccemahson.com/sitemap.xml

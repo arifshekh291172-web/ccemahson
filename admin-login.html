@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Login | CCE Mahson</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="css/admin.css">
+
+    <style>
+        .login-box {
+            max-width: 380px;
+            margin: 100px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 14px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, .12);
+            text-align: center
+        }
+
+        .login-box h1 {
+            margin-bottom: 6px
+        }
+
+        .login-box p {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 20px
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 14px;
+            border-radius: 8px;
+            border: 1px solid #cbd5e1
+        }
+
+        .login-box button {
+            width: 100%;
+            padding: 12px;
+            background: #2563eb;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer
+        }
+
+        .error {
+            color: red;
+            font-size: 13px;
+            margin-top: 10px
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-box">
+        <h1>Admin Login</h1>
+        <p>CCE Mahson Admin Panel</p>
+
+        <input type="email" id="email" placeholder="Admin Email">
+        <input type="password" id="password" placeholder="Password">
+
+        <button onclick="login()">Login</button>
+
+        <div class="error" id="err"></div>
+    </div>
+
+    <script>
+        async function login() {
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            const res = await fetch("http://localhost:5000/api/admin/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, password })
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                document.getElementById("err").innerText = data.msg;
+                return;
+            }
+
+            localStorage.setItem("admin", JSON.stringify(data.admin));
+            window.location.href = "admin-dashboard.html";
+        }
+    </script>
+
+</body>
+
+</html>

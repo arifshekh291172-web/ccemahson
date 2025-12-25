@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard | CCE</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+
+    <div class="dashboard">
+
+        <aside class="sidebar">
+            <h2>Admin Panel</h2>
+            <a href="admin-dashboard.html" class="active">Dashboard</a>
+            <a href="admin-courses.html">Courses</a>
+            <a href="admin-admissions.html">Admissions</a>
+            <a href="admin-students.html">Students</a>
+            <a href="admin-certificates.html">Certificates</a>
+        </aside>
+
+        <main class="main">
+            <h1>Dashboard</h1>
+
+            <div class="stats">
+                <div class="stat">
+                    <h3>Total Courses</h3>
+                    <p id="totalCourses">0</p>
+                </div>
+                <div class="stat">
+                    <h3>Total Admissions</h3>
+                    <p id="totalAdmissions">0</p>
+                </div>
+                <div class="stat">
+                    <h3>Pending (COD)</h3>
+                    <p id="pendingAdmissions">0</p>
+                </div>
+                <div class="stat">
+                    <h3>Successful</h3>
+                    <p id="successAdmissions">0</p>
+                </div>
+            </div>
+        </main>
+
+    </div>
+
+    <script src="admin.js"></script>
+    <script>loadDashboardStats();</script>
+</body>
+
+</html>

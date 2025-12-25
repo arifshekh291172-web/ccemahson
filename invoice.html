@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Invoice</title>
+    <style>
+        body {
+            font-family: Inter
+        }
+
+        .invoice {
+            max-width: 700px;
+            margin: auto;
+            padding: 40px;
+            border: 1px solid #000
+        }
+
+        h1 {
+            text-align: center
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0
+        }
+    </style>
+</head>
+
+<body onload="window.print()">
+
+    <div class="invoice">
+        <h1>CCE Mahson – Invoice</h1>
+
+        <div class="row">
+            <span>Student</span>
+            <span id="student"></span>
+        </div>
+
+        <div class="row">
+            <span>Course</span>
+            <span id="course"></span>
+        </div>
+
+        <div class="row">
+            <span>Amount</span>
+            <span id="amount"></span>
+        </div>
+
+        <div class="row">
+            <span>Transaction ID</span>
+            <span id="txn"></span>
+        </div>
+
+        <p style="margin-top:40px">
+            This is a system generated invoice.
+        </p>
+    </div>
+
+    <script>
+        const data = JSON.parse(localStorage.getItem("lastPayment"));
+
+        document.getElementById("student").innerText = data.studentName;
+        document.getElementById("course").innerText = data.courseTitle;
+        document.getElementById("amount").innerText = "₹" + data.amount;
+        document.getElementById("txn").innerText = data.txn;
+    </script>
+
+</body>
+
+</html>

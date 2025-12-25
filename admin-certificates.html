@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Certificates | CCE Mahson</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+
+<div class="dashboard">
+
+  <!-- ========== SIDEBAR ========== -->
+  <aside class="sidebar">
+    <h2>Admin Panel</h2>
+    <a href="admin-dashboard.html">Dashboard</a>
+    <a href="admin-courses.html">Courses</a>
+    <a href="admin-admissions.html">Admissions</a>
+    <a href="admin-students.html">Students</a>
+    <a href="admin-certificates.html" class="active">Certificates</a>
+  </aside>
+
+  <!-- ========== MAIN CONTENT ========== -->
+  <main class="main">
+
+    <h1>Certificates</h1>
+    <p style="color:#64748b">
+      Certificates can be generated only for completed & approved students
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Student Name</th>
+          <th>Course</th>
+          <th>Payment</th>
+          <th>Status</th>
+          <th>Certificate</th>
+        </tr>
+      </thead>
+
+      <tbody id="certificateTable">
+        <!-- JS se load hoga -->
+      </tbody>
+    </table>
+
+  </main>
+
+</div>
+
+<script src="admin.js"></script>
+
+<script>
+/* =========================================
+   LOAD CERTIFICATES DATA
+   (SUCCESS STUDENTS ONLY)
+========================================= */
+function loadCertificates() {
+  const table = document.getElementById("certificateTable");
+  if (!table) return;
+
+  const admissions =
+    JSON.parse(localStorage.getItem("admissions")) || [];
+
+  const eligible = admissions.filter(a => a.status === "SUCCESS");
+
+  table.innerHTML = "";
+
+  if (eligible.length === 0) {
+    table.innerHTML = `
+      <tr>
+        <td colspan="5" style="text-align:center;color:#64748b">
+          No students eligible for certificate yet
+        </td>
+      </tr>`;
+    return;
+  }
+
+  eligible.forEach(s => {
+    table.innerHTML += `
+      <tr>
+        <td>${s.name}</td>
+        <td>${s.course}</td>
+        <td>${s.payment}</td>
+        <td style="color:green;font-weight:600">
+          SUCCESS
+        </td>
+        <td>
+          <a class="btn edit"
+             href="admin-certificate.html?name=${encodeURIComponent(s.name)}&course=${encodeURIComponent(s.course)}">
+            Generate
+          </a>
+        </td>
+      </tr>`;
+  });
+}
+
+loadCertificates();
+</script>
+
+</body>
+</html>

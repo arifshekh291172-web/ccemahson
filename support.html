@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Support | CCE Mahson</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SOCKET.IO -->
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Inter, Arial
+        }
+
+        /* ===== FLOATING ICON ===== */
+        .chat-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            background: #25d366;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, .35);
+            z-index: 999
+        }
+
+        .badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: red;
+            color: #fff;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center
+        }
+
+        /* ===== CHAT WRAPPER ===== */
+        .chat-wrapper {
+            position: fixed;
+            inset: 0;
+            background: #f1f5f9;
+            display: none;
+            flex-direction: column;
+            z-index: 1000
+        }
+
+        /* ===== HEADER ===== */
+        .chat-header {
+            background: #2563eb;
+            color: #fff;
+            padding: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 22px;
+            cursor: pointer
+        }
+
+        /* ===== MESSAGES ===== */
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 14px;
+            background: #e5ddd5
+        }
+
+        .msg {
+            max-width: 78%;
+            padding: 10px 12px;
+            margin-bottom: 12px;
+            border-radius: 14px;
+            font-size: 14px;
+            position: relative;
+            animation: fade .2s ease
+        }
+
+        @keyframes fade {
+            from {
+                opacity: 0;
+                transform: translateY(4px)
+            }
+
+            to {
+                opacity: 1;
+                transform: none
+            }
+        }
+
+        .user {
+            background: #2563eb;
+            color: #fff;
+            margin-left: auto;
+            border-bottom-right-radius: 4px
+        }
+
+        .ai {
+            background: #fff;
+            color: #0f172a;
+            margin-right: auto;
+            border-bottom-left-radius: 4px
+        }
+
+        /* ===== TICKS ===== */
+        .tick {
+            font-size: 12px;
+            position: absolute;
+            bottom: -14px;
+            right: 6px;
+            color: #cbd5e1
+        }
+
+        .tick.seen {
+            color: #38bdf8
+        }
+
+        /* blue tick */
+
+        /* ===== TYPING ===== */
+        .typing {
+            padding: 6px 14px;
+            display: none
+        }
+
+        .dots span {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background: #64748b;
+            border-radius: 50%;
+            margin: 0 2px;
+            animation: blink 1.4s infinite both
+        }
+
+        .dots span:nth-child(2) {
+            animation-delay: .2s
+        }
+
+        .dots span:nth-child(3) {
+            animation-delay: .4s
+        }
+
+        @keyframes blink {
+            0% {
+                opacity: .2
+            }
+
+            20% {
+                opacity: 1
+            }
+
+            100% {
+                opacity: .2
+            }
+        }
+
+        /* ===== INPUT ===== */
+        .chat-input {
+            display: flex;
+            background: #fff;
+            border-top: 1px solid #e5e7eb
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            outline: none;
+            font-size: 15px
+        }
+
+        .chat-input button {
+            padding: 14px 18px;
+            border: none;
+            background: #2563eb;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- FLOAT ICON -->
+    <div class="chat-float" onclick="openChat()">
+        💬
+        <div class="badge" id="badge">2</div>
+    </div>
+
+    <!-- CHAT -->
+    <div class="chat-wrapper" id="chatBox">
+
+        <div class="chat-header">
+            CCE Mahson Support
+            <button class="close-btn" onclick="closeChat()">×</button>
+        </div>
+
+        <div class="chat-messages" id="messages">
+            <div class="msg ai">
+                👋 Hi! How can we help you today?
+            </div>
+        </div>
+
+        <div class="typing" id="typing">
+            <div class="dots">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+
+        <div class="chat-input">
+            <input id="msgInput" placeholder="Type a message" onkeydown="if(event.key==='Enter') sendMessage()">
+            <button onclick="sendMessage()">➤</button>
+        </div>
+
+    </div>
+
+    <script>
+        const API = "http://localhost:5000/api/support";
+        const socket = io("http://localhost:5000");
+
+        /* SESSION */
+        const ticketId = localStorage.ticketId || ("T" + Date.now());
+        localStorage.ticketId = ticketId;
+
+        const name = localStorage.supportName || prompt("Your name");
+        const email = localStorage.supportEmail || prompt("Your email");
+        localStorage.supportName = name;
+        localStorage.supportEmail = email;
+
+        socket.emit("joinTicket", ticketId);
+
+        let unread = 2;
+
+        /* UI */
+        function openChat() {
+            document.getElementById("chatBox").style.display = "flex";
+            document.getElementById("badge").style.display = "none";
+        }
+        function closeChat() {
+            document.getElementById("chatBox").style.display = "none";
+        }
+
+        /* ADD MESSAGE */
+        function addMsg(text, type, seen = false) {
+            const div = document.createElement("div");
+            div.className = "msg " + type;
+            div.innerHTML = text +
+                (type === "user"
+                    ? `<span class="tick ${seen ? 'seen' : ''}">✔✔</span>`
+                    : "");
+            document.getElementById("messages").appendChild(div);
+            div.scrollIntoView({ behavior: "smooth" });
+        }
+
+        /* SEND */
+        async function sendMessage() {
+            const input = document.getElementById("msgInput");
+            if (!input.value) return;
+
+            addMsg(input.value, "user", false);
+            const text = input.value;
+            input.value = "";
+            document.getElementById("typing").style.display = "block";
+
+            await fetch(API + "/send", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    ticketId, name, email, message: text
+                })
+            });
+        }
+
+        /* SOCKET EVENTS */
+        socket.on("newMessage", (m) => {
+            document.getElementById("typing").style.display = "none";
+
+            if (m.sender === "ai" || m.sender === "admin") {
+                addMsg(m.message, "ai");
+                markSeen();
+            }
+        });
+
+        /* BLUE TICK */
+        function markSeen() {
+            document.querySelectorAll(".tick").forEach(t => {
+                t.classList.add("seen");
+            });
+        }
+    </script>
+
+</body>
+
+</html>

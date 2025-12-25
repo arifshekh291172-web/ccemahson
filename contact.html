@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Contact Us | CCE Mahson</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/home.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="container nav-flex">
+    <div class="logo">CCE Mahson</div>
+    <nav class="nav" id="nav">
+      <a href="index.html">Home</a>
+      <a href="courses.html">Courses</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="contact.html" class="active">Contact</a>
+    </nav>
+    <div class="hamburger" onclick="toggleMenu()">☰</div>
+  </div>
+</header>
+
+<!-- CONTACT INFO -->
+<section class="container">
+  <h1>Contact Us</h1>
+  <p>
+    We are always ready to help you with course details and admissions.
+  </p>
+
+  <p>
+    📍 <b>Address:</b> Jamra, Rampur Road, Mahson (Near Kali Mata Mandir)<br>
+    📞 <b>Phone:</b> 9005526734 | 8738072989<br>
+    📧 <b>Email:</b> cce6aesc@gmail.com
+  </p>
+</section>
+
+<!-- CONTACT FORM -->
+<section class="container">
+  <h2>Send Enquiry</h2>
+
+  <form onsubmit="return submitContact()">
+    <input type="text" id="cname" placeholder="Your Name">
+    <input type="tel" id="cphone" placeholder="Mobile Number">
+    <input type="email" id="cemail" placeholder="Email Address">
+    <select id="ccourse">
+      <option value="">Select Course</option>
+      <option>DCA</option>
+      <option>ADCA</option>
+      <option>TALLY</option>
+      <option>CCC</option>
+      <option>O LEVEL</option>
+    </select>
+    <button class="btn">Send Enquiry</button>
+  </form>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  © 2025 Center of Computer Education, Mahson
+</footer>
+
+<!-- WHATSAPP -->
+<a class="whatsapp-float" href="javascript:whatsappEnquiry()">
+  WhatsApp
+</a>
+
+<script src="main.js"></script>
+<script>
+function toggleMenu(){
+  document.getElementById("nav").classList.toggle("open");
+}
+
+function submitContact(){
+  alert("Enquiry submitted successfully (backend later)");
+  return false;
+}
+</script>
+
+</body>
+</html>

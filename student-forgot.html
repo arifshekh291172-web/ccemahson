@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Forgot Password | CCE Mahson</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="student.css">
+</head>
+<body>
+
+<div class="auth-box">
+
+  <h1>Forgot Password</h1>
+  <p>Reset password using OTP</p>
+
+  <input type="email" id="fpEmail" placeholder="Registered Email">
+
+  <button class="btn outline" onclick="sendResetOTP()">Send OTP</button>
+
+  <div id="resetBox" style="display:none">
+    <input type="text" id="resetOTP" placeholder="Enter OTP">
+    <input type="password" id="newPassword" placeholder="New Password">
+    <input type="password" id="confirmNewPassword" placeholder="Confirm Password">
+
+    <button class="btn" onclick="resetPassword()">Reset Password</button>
+    <p id="resetStatus"></p>
+  </div>
+
+</div>
+
+<script src="student-auth.js"></script>
+</body>
+</html>

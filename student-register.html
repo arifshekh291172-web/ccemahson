@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Registration | CCE Mahson</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="student.css">
+</head>
+<body>
+
+<div class="auth-box">
+
+  <h1>Create Student Account</h1>
+  <p>Email verification required via OTP</p>
+
+  <input type="text" id="name" placeholder="Full Name">
+  <input type="text" id="username" placeholder="Username">
+  <input type="email" id="email" placeholder="Email Address">
+
+  <button class="btn outline" id="sendOtpBtn" onclick="sendOTP()">Send OTP</button>
+
+  <!-- LOADER -->
+  <div id="loader" class="loader">Processing...</div>
+
+  <!-- OTP -->
+  <div id="otpBox" style="display:none">
+    <input type="text" id="otpInput" placeholder="Enter 6-digit OTP">
+
+    <button class="btn outline" onclick="verifyOTP()">Verify OTP</button>
+
+    <p id="otpTimer">OTP expires in 02:00</p>
+
+    <p class="resend">
+      Didn’t receive OTP?
+      <span id="resendBtn" onclick="resendOTP()">Resend OTP</span>
+    </p>
+
+    <p id="otpStatus"></p>
+  </div>
+
+  <!-- PASSWORD -->
+  <div class="password-box">
+    <input type="password" id="password" placeholder="Password" disabled>
+    <span class="eye" onclick="togglePassword('password')">👁</span>
+  </div>
+
+  <div class="password-box">
+    <input type="password" id="confirmPassword" placeholder="Confirm Password" disabled>
+    <span class="eye" onclick="togglePassword('confirmPassword')">👁</span>
+  </div>
+
+  <!-- TERMS -->
+  <div class="check">
+    <input type="checkbox" id="terms">
+    <label for="terms">
+      I agree to the <a href="#">Terms & Privacy Policy</a>
+    </label>
+  </div>
+
+  <button class="btn" id="registerBtn" onclick="registerStudent()" disabled>
+    Create Account
+  </button>
+
+</div>
+
+<script src="student-auth.js"></script>
+</body>
+</html>

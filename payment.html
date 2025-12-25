@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Payment | CCE Mahson</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<style>
+*{box-sizing:border-box;font-family:Inter,Arial}
+body{margin:0;background:#f1f3f6}
+
+/* HEADER */
+.header{
+  background:#2874f0;
+  color:#fff;
+  padding:14px 20px;
+  font-size:18px;
+  font-weight:600;
+}
+
+/* LAYOUT */
+.container{
+  max-width:1200px;
+  margin:20px auto;
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:20px;
+}
+
+/* LEFT */
+.left{
+  background:#fff;
+  border-radius:6px;
+}
+
+.step{
+  padding:16px;
+  border-bottom:1px solid #e5e7eb;
+}
+
+.method{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:12px;
+  border:1px solid #e5e7eb;
+  border-radius:6px;
+  cursor:pointer;
+  margin-bottom:10px;
+}
+
+.method:hover{border-color:#2874f0}
+
+/* RIGHT */
+.right{
+  background:#fff;
+  border-radius:6px;
+  padding:16px;
+}
+
+.row{
+  display:flex;
+  justify-content:space-between;
+  margin:10px 0;
+  font-size:14px;
+}
+
+.total{
+  font-size:18px;
+  font-weight:700;
+}
+
+.pay-btn{
+  width:100%;
+  padding:14px;
+  background:#fb641b;
+  border:none;
+  color:#fff;
+  font-size:16px;
+  border-radius:6px;
+  cursor:pointer;
+  margin-top:16px;
+}
+
+@media(max-width:900px){
+  .container{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">Secure Payment</div>
+
+<div class="container">
+
+  <!-- LEFT -->
+  <div class="left">
+    <div class="step">
+      <h3>Payment Method</h3>
+
+      <label class="method">
+        <input type="radio" name="pay" value="ONLINE" checked>
+        UPI / Card / Net Banking
+      </label>
+
+      <label class="method">
+        <input type="radio" name="pay" value="COD">
+        Cash on Admission
+      </label>
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="right">
+    <h3 id="courseTitle">Loading course...</h3>
+
+    <div class="row">
+      <span>Course Fee</span>
+      <span id="fee">₹0</span>
+    </div>
+
+    <hr>
+
+    <div class="row total">
+      <span>Total Payable</span>
+      <span id="total">₹0</span>
+    </div>
+
+    <button class="pay-btn" id="payBtn" onclick="proceedPayment()">
+      Pay
+    </button>
+
+    <p style="font-size:12px;color:#64748b;margin-top:10px">
+      100% Secure Payments • Powered by Razorpay
+    </p>
+  </div>
+
+</div>
+
+<script>
+/* ===============================
+   GET COURSE ID FROM URL
+================================ */
+const params = new URLSearchParams(window.location.search);
+const courseId = params.get("courseId");
+const studentId = localStorage.getItem("studentId");
+let courseFee = 0;
+let courseTitle = "";
+
+/* ===============================
+   LOAD COURSE DETAILS (AUTO)
+================================ */
+async function loadCourse(){
+  const res = await fetch(
+    `http://localhost:5000/api/courses/${courseId}`
+  );
+  const course = await res.json();
+
+  courseFee = course.fees;
+  courseTitle = course.title;
+
+  document.getElementById("courseTitle").innerText = course.title;
+  document.getElementById("fee").innerText = `₹${course.fees}`;
+  document.getElementById("total").innerText = `₹${course.fees}`;
+  document.getElementById("payBtn").innerText =
+    `Pay ₹${course.fees}`;
+}
+
+loadCourse();
+
+/* ===============================
+   PAYMENT
+================================ */
+async function proceedPayment(){
+  const method = document.querySelector(
+    'input[name="pay"]:checked'
+  ).value;
+
+  if(method === "COD"){
+    alert("COD selected. Admission pending admin approval.");
+    return;
+  }
+
+  // create order
+  const res = await fetch(
+    "http://localhost:5000/api/payments/create-order",
+    {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({ amount: courseFee })
+    }
+  );
+
+  const order = await res.json();
+
+  const options = {
+    key: "RAZORPAY_KEY_ID",
+    amount: order.amount,
+    currency: "INR",
+    name: "CCE Mahson",
+    description: courseTitle,
+    order_id: order.id,
+    handler: async function (response) {
+      await fetch(
+        "http://localhost:5000/api/payments/verify",
+        {
+          method:"POST",
+          headers:{ "Content-Type":"application/json" },
+          body: JSON.stringify({
+            ...response,
+            student: studentId,
+            course: courseId
+          })
+        }
+      );
+      alert("Payment successful! Admission confirmed.");
+    }
+  };
+
+  new Razorpay(options).open();
+}
+</script>
+
+</body>
+</html>

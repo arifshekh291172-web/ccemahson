@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Certificate</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+
+    <div class="cert">
+        <h1>CERTIFICATE OF COMPLETION</h1>
+        <p>This certifies that</p>
+        <h2 id="name"></h2>
+        <p>has completed</p>
+        <h3 id="course"></h3>
+    </div>
+
+    <script>
+        const p = new URLSearchParams(location.search);
+        document.getElementById("name").innerText = p.get("name");
+        document.getElementById("course").innerText = p.get("course");
+    </script>
+
+</body>
+
+</html>

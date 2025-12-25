@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Gallery | CCE Mahson</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO -->
+  <meta name="description"
+    content="CCE Mahson gallery showcasing classrooms, computer labs, students, and professional learning environment." />
+  <meta name="robots" content="index, follow" />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/home.css">
+
+  <style>
+    /* ================= GALLERY PAGE ================= */
+    .gallery-hero {
+      background: linear-gradient(to right, #2563eb, #1e40af);
+      color: #fff;
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    .gallery-hero h1 {
+      margin-bottom: 8px;
+      font-size: 34px;
+    }
+
+    .gallery-hero p {
+      opacity: .9;
+      font-size: 16px;
+    }
+
+    .gallery-section {
+      padding: 50px 0;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+
+    .gallery-card {
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, .08);
+      transition: .35s ease;
+    }
+
+    .gallery-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 18px 35px rgba(0, 0, 0, .15);
+    }
+
+    .gallery-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .gallery-info {
+      padding: 14px;
+      text-align: center;
+      font-size: 14px;
+      color: #334155;
+    }
+
+    @media(max-width:600px) {
+      .gallery-hero h1 {
+        font-size: 26px
+      }
+
+      .gallery-card img {
+        height: 190px
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ================= HEADER ================= -->
+  <header class="header">
+    <div class="container nav-flex">
+      <div class="logo">CCE Mahson</div>
+
+      <nav class="nav" id="nav">
+        <a href="index.html">Home</a>
+        <a href="courses.html">Courses</a>
+        <a href="gallery.html" class="active">Gallery</a>
+        <a href="contact.html">Contact</a>
+        <a href="student-login.html" class="login-btn">Student Login</a>
+      </nav>
+
+      <div class="hamburger" onclick="toggleMenu()">☰</div>
+    </div>
+  </header>
+
+  <!-- ================= HERO ================= -->
+  <section class="gallery-hero">
+    <h1>Our Training Gallery</h1>
+    <p>Classrooms • Computer Labs • Practical Learning Environment</p>
+  </section>
+
+  <!-- ================= GALLERY ================= -->
+  <section class="container gallery-section">
+
+    <div class="gallery-grid">
+
+      <div class="gallery-card">
+        <img src="https://images.unsplash.com/photo-1581090700227-1e37b190418e?auto=format&fit=crop&w=900&q=80"
+          alt="Computer Training Classroom">
+        <div class="gallery-info">
+          Modern Computer Training Classroom
+        </div>
+      </div>
+
+      <div class="gallery-card">
+        <img src="https://images.unsplash.com/photo-1584697964192-0b6f63f0b3bb?auto=format&fit=crop&w=900&q=80"
+          alt="Students Learning Computers">
+        <div class="gallery-info">
+          Students Learning with Practical Approach
+        </div>
+      </div>
+
+      <div class="gallery-card">
+        <img src="https://images.unsplash.com/photo-1580894908361-967195033215?auto=format&fit=crop&w=900&q=80"
+          alt="Computer Lab">
+        <div class="gallery-info">
+          Well Equipped Computer Lab
+        </div>
+      </div>
+
+      <div class="gallery-card">
+        <img src="https://images.unsplash.com/photo-1584697964154-678a2f6b9b6b?auto=format&fit=crop&w=900&q=80"
+          alt="Coding Class">
+        <div class="gallery-info">
+          Coding & Programming Sessions
+        </div>
+      </div>
+
+      <div class="gallery-card">
+        <img src="https://images.unsplash.com/photo-1603354350317-6f7aaa5911c5?auto=format&fit=crop&w=900&q=80"
+          alt="Trainer Guiding Students">
+        <div class="gallery-info">
+          Expert Trainers Guiding Students
+        </div>
+      </div>
+
+      <div class="gallery-card">
+        <img src="https://images.unsplash.com/photo-1596495578065-6e0763fa1178?auto=format&fit=crop&w=900&q=80"
+          alt="Institute Interior">
+        <div class="gallery-info">
+          Professional Learning Environment
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="site-footer">
+    <div class="footer-bottom">
+      © 2025 Center of Computer Education (CCE Mahson). All Rights Reserved.
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById("nav").classList.toggle("open");
+    }
+  </script>
+
+</body>
+
+</html>

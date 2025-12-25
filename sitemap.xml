@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+  xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- HOME -->
+  <url>
+    <loc>https://www.ccemahson.com/</loc>
+    <priority>1.00</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+
+  <!-- COURSES -->
+  <url>
+    <loc>https://www.ccemahson.com/courses.html</loc>
+    <priority>0.90</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+
+  <!-- CONTACT -->
+  <url>
+    <loc>https://www.ccemahson.com/contact.html</loc>
+    <priority>0.80</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <!-- GALLERY -->
+  <url>
+    <loc>https://www.ccemahson.com/gallery.html</loc>
+    <priority>0.70</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <!-- ADMISSION -->
+  <url>
+    <loc>https://www.ccemahson.com/admission.html</loc>
+    <priority>0.85</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+</urlset>

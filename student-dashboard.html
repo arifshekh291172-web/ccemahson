@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Dashboard | CCE Mahson</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="student.css">
+</head>
+<body>
+
+<!-- ===== TOP BAR ===== -->
+<header class="topbar">
+  <span class="hamburger" onclick="toggleMenu()">☰</span>
+  <span class="title">Student Panel</span>
+</header>
+
+<div class="layout">
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="sidebar" id="sidebar">
+    <h2>Student</h2>
+
+    <a href="student-dashboard.html" class="active">Dashboard</a>
+    <a href="student-courses.html">My Courses</a>
+    <a href="student-certificates.html">Certificates</a>
+    <a href="student-profile.html">Profile</a>
+    <a href="#" onclick="logout()">Logout</a>
+  </aside>
+
+  <!-- ===== MAIN ===== -->
+  <main class="main">
+
+    <h1>Welcome, <span id="studentName">Student</span></h1>
+
+    <!-- INFO CARDS -->
+    <div class="cards">
+      <div class="card">
+        <h3>Course</h3>
+        <p id="courseName">Loading...</p>
+      </div>
+
+      <div class="card">
+        <h3>Payment</h3>
+        <p id="paymentStatus">Loading...</p>
+      </div>
+
+      <div class="card">
+        <h3>Status</h3>
+        <p class="success" id="admissionStatus">-</p>
+      </div>
+    </div>
+
+    <!-- DETAILS -->
+    <div class="box">
+      <h3>Student Details</h3>
+      <p><b>Name:</b> <span id="dName"></span></p>
+      <p><b>Email:</b> <span id="dEmail"></span></p>
+      <p><b>Admission Date:</b> <span id="dDate"></span></p>
+    </div>
+
+  </main>
+</div>
+
+<script src="student.js"></script>
+</body>
+</html>

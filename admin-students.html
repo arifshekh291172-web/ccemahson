@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Students</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+
+  <div class="dashboard">
+
+    <!-- ========== SIDEBAR ========== -->
+    <aside class="sidebar">
+      <h2>Admin Panel</h2>
+      <a href="admin-dashboard.html">Dashboard</a>
+      <a href="admin-courses.html">Courses</a>
+      <a href="admin-admissions.html">Admissions</a>
+      <a href="admin-students.html" class="active">Students</a>
+      <a href="admin-certificates.html">Certificates</a>
+    </aside>
+
+    <!-- ========== MAIN ========== -->
+    <main class="main">
+      <h1>Students</h1>
+      <p style="color:#64748b">
+        Only approved (successful) admissions appear here
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Student Name</th>
+            <th>Mobile</th>
+            <th>Course</th>
+            <th>Payment</th>
+            <th>Status</th>
+            <th>Admission Date</th>
+          </tr>
+        </thead>
+
+        <tbody id="studentTable">
+          <!-- JS se load hoga -->
+        </tbody>
+      </table>
+    </main>
+
+  </div>
+
+  <script src="admin.js"></script>
+  <script>
+    loadStudents();
+  </script>
+
+</body>
+
+</html>

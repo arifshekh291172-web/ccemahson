@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Course Details | CCE Mahson</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/home.css">
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+    <header class="header">
+        <div class="container nav-flex">
+            <div class="logo">CCE Mahson</div>
+
+            <nav class="nav" id="nav">
+                <a href="index.html">Home</a>
+                <a href="courses.html">Courses</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+
+            <div class="hamburger" onclick="toggleMenu()">☰</div>
+        </div>
+    </header>
+
+    <!-- ================= COURSE DETAILS ================= -->
+    <section class="container course-details" id="courseBox">
+
+        <h1 id="courseTitle">Loading...</h1>
+
+        <div class="course-meta">
+            <span id="courseDuration">Duration:</span>
+            <span id="courseFees">Fees:</span>
+        </div>
+
+        <hr style="margin:20px 0">
+
+        <h3>Course Description</h3>
+        <p id="courseDescription">
+            Loading course details...
+        </p>
+
+        <div class="course-actions">
+            <a id="applyBtn" class="btn">
+                Proceed to Payment
+            </a>
+            <a href="courses.html" class="btn outline">
+                ← Back to Courses
+            </a>
+        </div>
+
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="footer">
+        © 2025 Center of Computer Education, Mahson. All Rights Reserved.
+    </footer>
+
+    <!-- ================= WHATSAPP FLOAT ================= -->
+    <a class="whatsapp-float" href="javascript:whatsappEnquiry()">
+        WhatsApp Enquiry
+    </a>
+
+    <!-- JS -->
+    <script src="js/main.js"></script>
+
+    <script>
+        /* ===============================
+           GET COURSE ID FROM URL
+        ================================ */
+        const params = new URLSearchParams(window.location.search);
+        const courseId = params.get("id");
+
+        if (!courseId) {
+            document.getElementById("courseBox").innerHTML =
+                "<p style='color:#64748b'>Invalid course link.</p>";
+        }
+
+        /* ===============================
+           LOAD COURSE FROM BACKEND (LIVE)
+        ================================ */
+        async function loadCourseDetails() {
+            try {
+                const res = await fetch(
+                    `http://localhost:5000/api/courses/${courseId}`
+                );
+
+                if (!res.ok) throw new Error("Course not found");
+
+                const course = await res.json();
+
+                document.getElementById("courseTitle").innerText = course.title;
+                document.getElementById("courseDuration").innerText =
+                    "Duration: " + course.duration;
+                document.getElementById("courseFees").innerText =
+                    "Fees: ₹" + course.fees;
+                document.getElementById("courseDescription").innerText =
+                    course.description;
+
+                // 🔥 IMPORTANT: PAYMENT PAGE REDIRECT
+                document.getElementById("applyBtn").href =
+                    `payment.html?courseId=${course._id}`;
+
+            } catch (err) {
+                document.getElementById("courseBox").innerHTML =
+                    "<p style='color:#ef4444'>Course not found.</p>";
+            }
+        }
+
+        loadCourseDetails();
+
+        /* ===============================
+           NAV TOGGLE
+        ================================ */
+        function toggleMenu() {
+            document.getElementById("nav").classList.toggle("open");
+        }
+        document.title =
+            course.title + " Course | CCE Mahson";
+
+        document
+            .querySelector('meta[name="description"]')
+            ?.setAttribute(
+                "content",
+                course.description.substring(0, 150)
+            );
+
+    </script>
+
+</body>
+
+</html>

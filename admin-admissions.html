@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Admin Admissions</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+
+    <div class="dashboard">
+
+        <aside class="sidebar">
+            <h2>Admin Panel</h2>
+            <a href="admin-dashboard.html">Dashboard</a>
+            <a href="admin-admissions.html" class="active">Admissions</a>
+        </aside>
+
+        <main class="main">
+            <h1>Admissions</h1>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Course</th>
+                        <th>Payment</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="admissionTable"></tbody>
+            </table>
+        </main>
+
+    </div>
+
+    <script src="admin.js"></script>
+    <script>loadAdmissions();</script>
+</body>
+
+</html>
