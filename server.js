@@ -13,7 +13,7 @@ const adminRoutes = require("./routes/adminRoutes");
 const courseRoutes = require("./routes/courseRoutes");
 const admissionRoutes = require("./routes/admissionRoutes");
 const certificateRoutes = require("./routes/certificateRoutes");
-const paymentRoutes = require("./routes/paymentRoutes");
+// const paymentRoutes = require("./routes/paymentRoutes");
 const supportRoutes = require("./routes/supportRoutes"); // ✅ CUSTOMER SUPPORT
 
 /* =========================
@@ -69,7 +69,7 @@ app.use("/api/students", studentRoutes);       // OTP, Register, Login, Forgot
 app.use("/api/admin", adminRoutes);             // Admin login
 app.use("/api/courses", courseRoutes);          // Courses CRUD
 app.use("/api/admissions", admissionRoutes);    // Admission flow
-app.use("/api/payments", paymentRoutes);        // Payments
+// app.use("/api/payments", paymentRoutes);        // Payments
 app.use("/api/certificates", certificateRoutes);
 app.use("/api/support", supportRoutes);         // ✅ AI + Admin Chat
 
